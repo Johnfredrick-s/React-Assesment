@@ -1,11 +1,11 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 const AddSegment = ({ hide, heading }) => {
     const [selectedSegment, setSelectedSegment] = useState({})
     const [segment, setSegment] = useState('')
     const [submitted, setSubmitted] = useState(false)
-    const [options, setOptions] = useState([
+    const options = [
         { label: 'First Name', value: 'first_name' },
         { label: 'Last Name', value: 'last_name' },
         { label: 'Gender', value: 'gender' },
@@ -13,38 +13,35 @@ const AddSegment = ({ hide, heading }) => {
         { label: 'Account Name', value: 'account_name' },
         { label: 'City', value: 'city' },
         { label: 'State', value: 'state' },
-    ])
+    ]
 
     const SelectSegment = (e, selectedval) => {
-        console.log(e, "e");
+        // console.log(e, "e");
         let schema = e.target.value;
-    
+
         if (schema) {
             let key_name = schema.split(",");
             let newKey = key_name[0];
             let newValue = key_name[1];
-    
+
             setSelectedSegment((prev) => {
                 const updatedSegment = {};
-    
-                // Iterate over the original keys and update values as needed
+
                 Object.keys(prev).forEach((key) => {
                     if (key === selectedval) {
-                        // Replace the selectedval with the new key-value pair
                         updatedSegment[newKey] = newValue;
                     } else {
-                        // Retain the original key-value pair
                         updatedSegment[key] = prev[key];
                     }
                 });
-    
+
                 return updatedSegment;
             });
-    
+
         }
     };
-    
-    
+
+
 
     const addNewSchema = () => {
         let schema_segment = document.getElementById('schema-segment')
@@ -76,22 +73,15 @@ const AddSegment = ({ hide, heading }) => {
 
     const blueBoxOptions = (selectedval) => {
 
-        // Object.keys(selectedSegment).map(val => {
         return options
             .filter((option) => {
-                // If it's the first value, include all options.
-                // Otherwise, filter based on the selectedval or any condition.
                 return !Object.keys(selectedSegment).includes(option.value) || option.value == selectedval;
-                // return option.value !== val && option.value == selectedval;
             })
             .map((res) => (
                 <option key={res.value} value={res.value + "," + res.label}>
                     {res.label}
                 </option>
             ))
-        // })
-
-
     }
     return (
         <>

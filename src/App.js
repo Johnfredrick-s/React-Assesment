@@ -1,7 +1,6 @@
 import { lazy, Suspense, useState } from 'react';
 import Rodal from 'rodal';
 
-// include styles
 import 'rodal/lib/rodal.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +20,7 @@ function App() {
     const url = "https://webhook.site/660c8134-20bf-4f0b-85b3-e9885291c28e"
     const response = await fetch(url,{method:'POST',headers:{'Content-Type':'Application/json'},body:JSON.stringify(params)});
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
     if(data.status == "Success" && data.message){
       toast.success(data.message)
     }else{
