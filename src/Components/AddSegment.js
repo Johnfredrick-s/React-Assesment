@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 const AddSegment = ({ hide, heading }) => {
@@ -6,7 +6,6 @@ const AddSegment = ({ hide, heading }) => {
     const [segment, setSegment] = useState('')
     const [submitted, setSubmitted] = useState(false)
     const [options, setOptions] = useState([
-        // { label: 'Add schema to segment', value: 'Add schema to segment' },
         { label: 'First Name', value: 'first_name' },
         { label: 'Last Name', value: 'last_name' },
         { label: 'Gender', value: 'gender' },
@@ -16,10 +15,36 @@ const AddSegment = ({ hide, heading }) => {
         { label: 'State', value: 'state' },
     ])
 
-    const SelectSegment = (e) => {
-        console.log(e, "e")
-
-    }
+    const SelectSegment = (e, selectedval) => {
+        console.log(e, "e");
+        let schema = e.target.value;
+    
+        if (schema) {
+            let key_name = schema.split(",");
+            let newKey = key_name[0];
+            let newValue = key_name[1];
+    
+            setSelectedSegment((prev) => {
+                const updatedSegment = {};
+    
+                // Iterate over the original keys and update values as needed
+                Object.keys(prev).forEach((key) => {
+                    if (key === selectedval) {
+                        // Replace the selectedval with the new key-value pair
+                        updatedSegment[newKey] = newValue;
+                    } else {
+                        // Retain the original key-value pair
+                        updatedSegment[key] = prev[key];
+                    }
+                });
+    
+                return updatedSegment;
+            });
+    
+        }
+    };
+    
+    
 
     const addNewSchema = () => {
         let schema_segment = document.getElementById('schema-segment')
